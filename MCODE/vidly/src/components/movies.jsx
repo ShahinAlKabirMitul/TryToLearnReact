@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { getMovies } from '../services/fakeMovieService';
 import Like from './common/like';
+import Pagination from './common/Pagination';
 class Movies extends Component {
   state = {
     movies: getMovies(),
+    pageSize: 10,
   };
 
   handlDelete = movie => {
@@ -19,13 +21,18 @@ class Movies extends Component {
     this.setState({ movies });
   };
 
+  handlPageChange = page => {
+    console.log(page);
+  };
+
   render() {
     const { movies } = this.state;
-    if (movies.length === 0) return <p>There are no movie in the database</p>;
+    const { length: count } = this.state.movies;
+    if (count === 0) return <p>There are no movie in the database</p>;
 
     return (
       <div>
-        <p>Showing {this.state.movies.length} movies in the database</p>
+        <p>Showing {count} movies in the database</p>
         <table className="table">
           <thead>
             {movies.length > 0 && (
@@ -65,6 +72,11 @@ class Movies extends Component {
               ))}
           </tbody>
         </table>
+        <Pagination
+          itemsCount={count}
+          pageSize={this.state.pageSize}
+          onPageChange={this.handlPageChange}
+        />
       </div>
     );
   }
