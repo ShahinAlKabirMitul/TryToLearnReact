@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
+import Input from './common/input';
 class LoginForm extends Component {
   state = {
     account: { userName: '', password: '' },
+    error: {},
+  };
+  validate = () => {
+    const errors = {};
+    const { account } = this.state;
+    if (account.userName.trim() === '')
+      errors.userName = 'UserName is required';
+    if (account.password.trim() === '')
+      errors.password = 'Password is required';
+
+    return Object.keys(errors).length === 0 ? null : errors;
   };
   handleSubmit = e => {
     e.preventDefault();
+
+    const errors = this.validate();
+    console.log(errors);
+    this.setState({ errors });
+    if (errors) return;
     // call the server
     console.log('form submitted');
   };
@@ -19,29 +36,18 @@ class LoginForm extends Component {
       <div>
         <h1>Login</h1>
         <form onSubmit={this.handleSubmit}>
-          <div className="form-group">
-            <label htmlFor="userName">User Name</label>
-            <input
-              value={account.userName}
-              onChange={this.handleChnage}
-              name="userName"
-              autoFocus
-              id="userName"
-              type="text"
-              className="form-control"
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              value={account.password}
-              onChange={this.handleChnage}
-              name="password"
-              type="password"
-              className="form-control"
-            />
-          </div>
+          <Input
+            name="userName"
+            value={account.userName}
+            lable="UserName"
+            onChnage={this.handleChnage}
+          />
+          <Input
+            name="password"
+            value={account.password}
+            lable="Password"
+            onChnage={this.handleChnage}
+          />
           <button className="btn btn-primary">Login</button>
         </form>
       </div>
