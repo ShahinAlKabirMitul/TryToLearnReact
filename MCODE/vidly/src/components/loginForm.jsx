@@ -3,7 +3,7 @@ import Input from './common/input';
 class LoginForm extends Component {
   state = {
     account: { userName: '', password: '' },
-    error: {},
+    errors: {},
   };
   validate = () => {
     const errors = {};
@@ -19,8 +19,7 @@ class LoginForm extends Component {
     e.preventDefault();
 
     const errors = this.validate();
-    console.log(errors);
-    this.setState({ errors });
+    this.setState({ errors: errors || {} });
     if (errors) return;
     // call the server
     console.log('form submitted');
@@ -31,7 +30,7 @@ class LoginForm extends Component {
     this.setState({ account });
   };
   render() {
-    const { account } = this.state;
+    const { account, errors } = this.state;
     return (
       <div>
         <h1>Login</h1>
@@ -41,12 +40,14 @@ class LoginForm extends Component {
             value={account.userName}
             lable="UserName"
             onChnage={this.handleChnage}
+            error={errors.userName}
           />
           <Input
             name="password"
             value={account.password}
             lable="Password"
             onChnage={this.handleChnage}
+            error={errors.password}
           />
           <button className="btn btn-primary">Login</button>
         </form>
