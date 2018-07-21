@@ -11,7 +11,6 @@ const NavBar = () => {
         type="button"
         data-toggle="collapse"
         data-target="#navbarNavAltMarkup"
-        aria-con
         trols="navbarNavAltMarkup"
         aria-expanded="false"
         aria-label="Toggle navigation"
