@@ -2,8 +2,7 @@ import React from 'react';
 import Form from './common/form';
 import Joi from 'joi-browser';
 import { getGenres } from '../services/fakeGenreService';
-import { getMovie } from '../services/fakeMovieService';
-import { saveMovie } from './../services/fakeMovieService';
+import { getMovie, saveMovie } from '../services/fakeMovieService';
 class MovieForm extends Form {
   state = {
     data: { title: '', genreId: '', numberInStock: '', dailyRentalRate: '' },
@@ -52,19 +51,21 @@ class MovieForm extends Form {
     };
   };
 
-  doSummit = () => {
+  doSubmit = () => {
     saveMovie(this.state.data);
     this.props.history.push('/movies');
   };
   render() {
-    const { match, history } = this.props;
     return (
       <div>
         <h1>Movie Form</h1>
-        {this.renderInput('title', 'Title')}
-        {this.renderInput('numberInStock', 'Stock')}
-        {this.renderInput('dailyRentalRate', 'Rate')}
-        {this.renderButton('Save')}
+        <form onSubmit={this.handleSubmit}>
+          {this.renderInput('title', 'Title')}
+          {this.renderSelect('genreId', 'Genre', this.state.genres)}
+          {this.renderInput('numberInStock', 'Stock')}
+          {this.renderInput('dailyRentalRate', 'Rate')}
+          {this.renderButton('Save')}
+        </form>
       </div>
     );
   }
