@@ -33,10 +33,15 @@ class App extends Component {
     const posts = this.state.posts.filter(x => x.id !== post.id);
     this.setState({ posts });
     try {
-      await axios.delete(apiEndPoint + '/' + post.id);
+      await axios.delete('s' + apiEndPoint + '/' + post.id);
       //throw new Error('dsff');
     } catch (ex) {
-      alert('Fail');
+      if (ex.response && ex.response.status === 404)
+        alert('This post has already deleted');
+      else {
+        console.log('Logging the error', ex);
+        alert('An unexpected error', ex);
+      }
       this.setState({ posts: originalPost });
     }
   };
