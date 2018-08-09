@@ -28,8 +28,11 @@ class App extends Component {
     console.log(data);
   };
 
-  handleDelete = post => {
+  handleDelete = async post => {
     console.log('Delete', post);
+    await axios.delete(apiEndPoint + '/' + post.id);
+    const posts = this.state.posts.filter(x => x.id !== post.id);
+    this.setState({ posts });
   };
 
   render() {
