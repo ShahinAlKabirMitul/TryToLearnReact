@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import http from './services/httpService';
 import config from './config.json';
@@ -17,6 +19,7 @@ class App extends Component {
     const { data: post } = await http.post(config.apiEndPoint, obj);
     const posts = [post, ...this.state.posts];
     this.setState({ posts });
+    toast('Add Sucessfull');
   };
 
   handleUpdate = async post => {
@@ -46,6 +49,7 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
+        <ToastContainer />
         <button className="btn btn-primary" onClick={this.handleAdd}>
           Add
         </button>
