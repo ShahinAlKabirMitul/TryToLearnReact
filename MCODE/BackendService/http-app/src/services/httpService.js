@@ -8,7 +8,7 @@ axios.interceptors.response.use(null, error => {
     error.response.status < 500;
   if (!expectedError) {
     Raven.captureException(error);
-    toast.error('An unexpected error', error);
+    toast('An unexpected error', error);
   }
   return Promise.reject(error);
 });
